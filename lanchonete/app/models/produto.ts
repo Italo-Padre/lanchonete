@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
+import Tipo from './tipo.js'
+import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
+import Ingredientess from './ingredientess.js'
 
 export default class Produto extends BaseModel {
   @column({ isPrimary: true })
@@ -22,4 +25,12 @@ export default class Produto extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  @belongsTo(()=>Tipo)
+  declare tipo: BelongsTo<typeof Tipo>
+
+  @manyToMany(()=>Ingredientess,{
+    pivotTable:'produtos_ingredientes'
+  })
+  declare ingredientes: ManyToMany<typeof Ingredientess>
 }

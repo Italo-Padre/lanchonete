@@ -6,7 +6,7 @@ export default class TiposController {
   async index({request}: HttpContext){
     const page = request.input('page',1)
     const perPage = request.input('perPage',10)
-    return await Tipo.query().paginate(page,perPage)
+    return await Tipo.query().preload('produto').paginate(page,perPage)
   }
 
   async show({params}: HttpContext){

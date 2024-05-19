@@ -6,7 +6,7 @@ export default class ProdutosController {
   async index({request}: HttpContext){
     const page = request.input('page',1)
     const perPage = request.input('perPage',10)
-    return await Produto.query().paginate(page,perPage)
+    return await Produto.query().preload('tipo').paginate(page,perPage)
   }
 
   async show({params}: HttpContext){
