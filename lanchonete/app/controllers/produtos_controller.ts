@@ -10,7 +10,10 @@ export default class ProdutosController {
   }
 
   async show({params}: HttpContext){
-    return await Produto.findOrFail,(params.id)
+    return await Produto.query().where('id', params.id)
+    .preload('tipo')
+//    .preload('ingredientes')
+    .firstOrFail()
   }
 
   async store({request}: HttpContext){

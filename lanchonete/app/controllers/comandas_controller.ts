@@ -9,7 +9,11 @@ export default class ComandasController {
   }
 
   async show({params}: HttpContext){
-    return await Comanda.findOrFail,(params.id)
+    return await Comanda.query().where('id', params.id)
+                                .preload('cliente')
+                                .preload('funcionario')
+                                .preload('forma_pagamento')
+                                .firstOrFail()
   }
 
   async store({request}: HttpContext){
